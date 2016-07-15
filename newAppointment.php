@@ -23,19 +23,17 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Thêm Mới Lịch Hẹn</title>
-        <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" />
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CHI TIẾT CUỘC HẸN</center></h2>
         <div style="width: 90%">
+           
             <form class="form-horizontal" role="form" action="newAppointment.php" method="POST" >
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cusId">Khách hàng<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <select name='cusId' id='cusId'>
+                        <select class="selectpicker" name='cusId' id='cusId'>
                             <option value=''>Chọn</option>
                             <?php
                             $listCus = DBUtil::getInstance()->getListCustomer($userId);

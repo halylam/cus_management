@@ -13,7 +13,9 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Đăng Nhập</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+        <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>

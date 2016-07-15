@@ -43,9 +43,6 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Chỉnh sửa giao dịch</title>
-        <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" />
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <?php include 'header.php' ?>
@@ -57,7 +54,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cusId">Khách hàng<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <select name='cusId' id='cusId' value='<?php echo $tranItem["cusId"]; ?>'>
+                        <select class="selectpicker"  name='cusId' id='cusId' value='<?php echo $tranItem["cusId"]; ?>'>
                             <option value=''>Chọn</option>
                             <?php
                             if ($userType == 'Admin') {

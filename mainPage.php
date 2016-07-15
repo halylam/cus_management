@@ -23,8 +23,6 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Trang chủ</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>        
         <?php include 'header.php' ?>

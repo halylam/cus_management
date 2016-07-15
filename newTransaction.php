@@ -18,9 +18,6 @@ if (isset($_SESSION['userID'])) {
     <head>
         <meta charset="UTF-8">
         <title>Thêm Mới Giao Dịch</title>
-        <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" />
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <?php include 'header.php' ?>
@@ -31,7 +28,7 @@ if (isset($_SESSION['userID'])) {
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cusId">Khách hàng<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <select name='cusId' id='cusId'>
+                        <select class="selectpicker"  name='cusId' id='cusId'>
                             <option value=''>Chọn</option>
                             <?php
                             $listCus = DBUtil::getInstance()->getListCustomer($userId);

@@ -44,9 +44,6 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Chi tiết khách hàng</title>
-        <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" />
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
     </head>
     <body> 
         <?php include 'header.php' ?>
