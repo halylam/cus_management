@@ -101,6 +101,7 @@ and open the template in the editor.
                 ?>" value="Danh sách nhân viên" onClick="document.location.href = 'listUser.php'" />     
         <input class="btn btn-success" type="button" value="Thêm Mới Lịch Hẹn" onClick="document.location.href = 'newAppointment.php'" />      
         <input class="btn btn-success" type="button" value="Thêm Mới Giao Dịch" onClick="document.location.href = 'newTransaction.php'" />      
+        <input class="btn btn-success" type="button" value="Báo Cáo Mỗi Ngày" onClick="document.location.href = 'baocao.php'" />      
     </body>
 
 </html>

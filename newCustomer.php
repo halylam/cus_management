@@ -4,8 +4,6 @@ session_start();
 require_once("Includes/db.php");
 $nameIsEmpty = false;
 $phoneIsEmpty = false;
-$addressIsEmpty = false;
-$birthdayIsEmpty = false;
 $invalidEmail = false;
 if (isset($_SESSION['userID'])) {
     $userId = $_SESSION['userID'];
@@ -47,14 +45,14 @@ and open the template in the editor.
                 </div>
                 
                  <div class="form-group">
-                    <label class="control-label col-sm-2" for="cusAddress">Địa chỉ<label style="color: red">(*)</label>: </label>
+                    <label class="control-label col-sm-2" for="cusAddress">Địa chỉ: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="cusAddress" value="" />
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="birthday">Ngày sinh<label style="color: red">(*)</label>: </label>
+                    <label class="control-label col-sm-2" for="birthday">Ngày sinh: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="datetimepicker" name="birthday" value="" />
                     </div>
@@ -96,14 +94,7 @@ and open the template in the editor.
                 $phoneIsEmpty = true;
                 $mess = $mess . "<br/>Số điện thoại bắt buộc nhập ";
             }
-            if ($_POST['cusAddress'] == "") {
-                $addressIsEmpty = true;
-                $mess = $mess . "<br/>Địa chỉ bắt buộc nhập ";
-            }            
-            if ($_POST['birthday'] == "") {
-                $birthdayIsEmpty = true;
-                $mess = $mess . "<br/>Ngày sinh bắt buộc nhập ";
-            }
+            
             if ($_POST['email'] != "") {
                 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $invalidEmail = true;
@@ -111,7 +102,7 @@ and open the template in the editor.
                 }
             }
             
-            if (!$nameIsEmpty && !$phoneIsEmpty && !$addressIsEmpty && !$birthdayIsEmpty && !$invalidEmail) {
+            if (!$nameIsEmpty && !$phoneIsEmpty && !$invalidEmail) {
                 DBUtil::getInstance()->insertCustomer($_POST["cusName"], $_POST["cusPhone"], $_POST["email"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["cusAddress"], $_POST["cusNote"], $userId);
                 header('Location: listCustomer.php');
                 exit;

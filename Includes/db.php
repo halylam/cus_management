@@ -106,11 +106,11 @@ class DBUtil extends mysqli {
     }
 
     public function getListCustomer($userId) {
-        return $this->query("SELECT *, u.login FROM customer c LEFT JOIN user u on c.userId = u.userId WHERE c.userId=" . $userId);
+        return $this->query("SELECT c.*, u.login FROM customer c LEFT JOIN user u on c.userId = u.userId WHERE c.userId=" . $userId);
     }
 
     public function getListCustomerAdmin() {
-        return $this->query("SELECT *, u.login FROM customer c LEFT JOIN user u on c.userId = u.userId");
+        return $this->query("SELECT c.*, u.login FROM customer c LEFT JOIN user u on c.userId = u.userId");
     }
 
     public function getCustomerDetail($cusId) {
