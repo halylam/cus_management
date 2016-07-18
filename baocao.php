@@ -4,6 +4,7 @@ session_start();
 require_once("Includes/db.php");
 if (isset($_SESSION['userID'])) {
     $userId = $_SESSION['userID'];
+    $userType = $_SESSION['userType'];
     $fullname = $_SESSION['fullname'];
 } else {
     header('Location: index.php');
@@ -39,93 +40,102 @@ and open the template in the editor.
                     <table class="table">
                         <tr>
                             <th>Tên File</th>
-                            <th>Download</th>
+                            <th>Tên Nhân Viên</th>
+                            <th>Thao Tác</th>
                         </tr>
 
                         <?php
-                        if ($handle = opendir('uploads/' . $userId)) {
-                            while (false !== ($entry = readdir($handle))) {
-                                if ($entry != "." && $entry != "..") {
-                                    $file = 'uploads/' . $userId . '/' . $entry;
-                                    echo "<tr><td>$entry<td>";
-                                    echo "<td><a onclick='".file_put_contents("Tmpfile.jpg", $file);"'/><i class='glyphicon glyphicon-pencil'></i></a><td></tr>";
+                        if ($userType == 'Admin') {
+                            $path = realpath('uploads/');
+                            $objects = new RecursiveIteratorIterator(
+                                    new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+
+                            foreach ($objects as $name => $object) {
+                                $fileName = $object->getFilename();
+                                $path = $object->getPathname();
+                                if ($fileName != '.' && $fileName != '..' && strpos($fileName, '.') !== false) {
+                                    $pathArr = explode("uploads/", $path);
+                                    $pathArr = explode("/", $pathArr[1]);
+                                    echo "<tr><td>$fileName</td>";
+                                    echo "<td>$pathArr[0]</td>";
+                                    echo "<td><a href='download.php?file=" . $fileName . "&path=$pathArr[0]'><i class='glyphicon glyphicon-download-alt'></i></a><a href='deleteFile.php?file=" . $fileName . "&path=$pathArr[0]'><i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
                                 }
                             }
-                            closedir($handle);
+                        } else {
+                            $path = $userId . '-' . $fullname;
+                            $target_dir = 'uploads/' . $path;
+                            if (!is_dir($target_dir)) {
+                                mkdir($target_dir);
+                            }
+                            if ($handle = opendir($target_dir)) {
+                                while (false !== ($entry = readdir($handle))) {
+                                    if ($entry != "." && $entry != "..") {
+                                        $file = $target_dir . '/' . $entry;
+                                        echo "<tr><td>$entry</td>";
+                                        echo "<td>$fullname</td>";
+                                        echo "<td><a href='download.php?file=" . $entry . "&path=$path'><i class='glyphicon glyphicon-download-alt'></i></a><a href='deleteFile.php?file=" . $entry . "&path=$path'><i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                                    }
+                                }
+                                closedir($handle);
+                            }
                         }
                         ?>
 
                     </table>
                 </div>   
 
-
                 <label class="control-label"><h4>Chọn File báo cáo trong ngày</h4></label>
                 <input id="fileToUpload" type="file" name="fileToUpload" class="file">
                 <br/>
                 <input class="btn btn-success"  type="button" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
             </form>
-
         </div>
     </center>
-    
 
-
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            $target_dir = "uploads/" . $userId . "/";
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir);
-            }
-
-            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-// Check if image file is a actual image or fake image
-            if (isset($_POST["submit"])) {
-                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-                if ($check !== false) {
-                    echo "File is an image - " . $check["mime"] . ".";
-                    $uploadOk = 1;
-                } else {
-                    echo "File is not an image.";
-                    $uploadOk = 0;
-                }
-            }
-// Check if file already exists
-            if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
-                $uploadOk = 0;
-            }
-// Check file size
-            if ($_FILES["fileToUpload"]["size"] > 500000) {
-                echo "Sorry, your file is too large.";
-                $uploadOk = 0;
-            }
-// Allow certain file formats
-            if ($imageFileType != "xls" && $imageFileType != "xlsx" && $imageFileType != "pdf" && $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                echo "Sorry, only XLS, XLSX, PDF, JPG, JPEG, PNG, GIF files are allowed.";
-                $uploadOk = 0;
-            }
-// Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-            } else {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-                } else {
-                    echo "Sorry, there was an error uploading your file.";
-                }
-            }
-            
-            header('Location: baocao.php');
-                exit;
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $mess;
+        $target_dir = "uploads/" . $userId . '-' . $fullname . "/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir);
         }
-        ?>
-    
-    
-    </body>
-    
-    
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+// Check if file already exists
+        if (file_exists($target_file)) {
+            $mess = "Xin lỗi, File đã tồn tại.";
+            $uploadOk = 0;
+        }
+// Check file size
+        if ($_FILES["fileToUpload"]["size"] > 1024000) {
+            $mess = "Xin lỗi, Dung lượng file quá lơn. File phải nhỏ hơn 1Mb.";
+            $uploadOk = 0;
+        }
+// Allow certain file formats
+        if ($imageFileType != "xls" && $imageFileType != "xlsx" && $imageFileType != "pdf" && $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+            $mess = "Xin lỗi, chỉ XLS, XLSX, PDF, JPG, JPEG, PNG, GIF files được chấp nhận.";
+            $uploadOk = 0;
+        }
+// Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo("<div class='alert alert-danger'><strong>Lỗi!</strong> " . $mess . "</div>");
+// if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                header('Location: baocao.php');
+                exit;
+            } else {
+                $mess = "Xin lỗi. Có lỗi trong lúc tải file lên server";
+                echo("<div class='alert alert-danger'><strong>Lỗi!</strong> " . $mess . "</div>");
+            }
+        }
+    }
+    ?>
+
+
+</body>
+
+
 </html>
