@@ -105,17 +105,17 @@ and open the template in the editor.
 
 // Check if file already exists
         if (file_exists($target_file)) {
-            $mess = "Xin lỗi, File đã tồn tại.";
+            $mess = "File đã tồn tại.";
             $uploadOk = 0;
         }
 // Check file size
         if ($_FILES["fileToUpload"]["size"] > 1024000) {
-            $mess = "Xin lỗi, Dung lượng file quá lơn. File phải nhỏ hơn 1Mb.";
+            $mess = "Dung lượng file quá lơn. File phải nhỏ hơn 1Mb.";
             $uploadOk = 0;
         }
 // Allow certain file formats
         if ($imageFileType != "xls" && $imageFileType != "xlsx" && $imageFileType != "pdf" && $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-            $mess = "Xin lỗi, chỉ XLS, XLSX, PDF, JPG, JPEG, PNG, GIF files được chấp nhận.";
+            $mess = "chỉ XLS, XLSX, PDF, JPG, JPEG, PNG, GIF files được chấp nhận.";
             $uploadOk = 0;
         }
 // Check if $uploadOk is set to 0 by an error
@@ -127,7 +127,7 @@ and open the template in the editor.
                 header('Location: baocao.php');
                 exit;
             } else {
-                $mess = "Xin lỗi. Có lỗi trong lúc tải file lên server";
+                $mess = "Có lỗi trong lúc tải file lên server";
                 echo("<div class='alert alert-danger'><strong>Lỗi!</strong> " . $mess . "</div>");
             }
         }
