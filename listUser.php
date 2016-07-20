@@ -27,7 +27,9 @@ and open the template in the editor.
         <h2 style="color: #188420;"><center>DANH SÁCH NHÂN VIÊN</center></h2>
         
         <div class="panel panel-default">
-            <div class="panel-heading"></div>
+            <div class="panel-heading">
+                <input id="filter" type="text" class="form-control" placeholder="Nhập tiêu chí lọc..." />
+            </div>
             <table class="table">
                <tr>
                 <th>Tên Đăng Nhập</th>
@@ -63,4 +65,17 @@ and open the template in the editor.
 
         <input class="btn btn-success"  type="button" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
     </body>
+    <script>
+        $(document).ready(function () {
+            (function ($) {
+                $('#filter').keyup(function () {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.table tr').hide();
+                    $('.table tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+                })
+            }(jQuery));
+        });
+    </script>
 </html>

@@ -36,10 +36,13 @@ and open the template in the editor.
         <div style="width: 70%">
             <form action="baocao.php" method="post" enctype="multipart/form-data">
                 <div class="panel panel-default">
-                    <div class="panel-heading"></div>
+                    <div class="panel-heading">
+                        <input id="filter" type="text" class="form-control" placeholder="Nhập tiêu chí lọc..." />
+                    </div>
                     <table class="table">
                         <tr>
                             <th>Tên File</th>
+                            <th>Ngày tạo file</th>
                             <th>Tên Nhân Viên</th>
                             <th>Thao Tác</th>
                         </tr>
@@ -54,9 +57,12 @@ and open the template in the editor.
                                 $fileName = $object->getFilename();
                                 $path = $object->getPathname();
                                 if ($fileName != '.' && $fileName != '..' && strpos($fileName, '.') !== false) {
+                                    $path = str_replace("\\", "/", $path);
                                     $pathArr = explode("uploads/", $path);
                                     $pathArr = explode("/", $pathArr[1]);
+                                    $file = 'uploads/' . $pathArr[0] . '/' . $fileName;
                                     echo "<tr><td>$fileName</td>";
+                                    echo "<td>" . date('d-m-Y H:i:s', filectime($file)) . "</td>";
                                     echo "<td>$pathArr[0]</td>";
                                     echo "<td><a href='download.php?file=" . $fileName . "&path=$pathArr[0]'><i class='glyphicon glyphicon-download-alt'></i></a><a href='deleteFile.php?file=" . $fileName . "&path=$pathArr[0]'><i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
                                 }
@@ -70,8 +76,8 @@ and open the template in the editor.
                             if ($handle = opendir($target_dir)) {
                                 while (false !== ($entry = readdir($handle))) {
                                     if ($entry != "." && $entry != "..") {
-                                        $file = $target_dir . '/' . $entry;
                                         echo "<tr><td>$entry</td>";
+                                        echo "<td>" . date('d-m-Y H:i:s', filectime('uploads/' . $path . '/' . $entry)) . "</td>";
                                         echo "<td>$fullname</td>";
                                         echo "<td><a href='download.php?file=" . $entry . "&path=$path'><i class='glyphicon glyphicon-download-alt'></i></a><a href='deleteFile.php?file=" . $entry . "&path=$path'><i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
                                     }
@@ -133,9 +139,20 @@ and open the template in the editor.
         }
     }
     ?>
-
-
 </body>
+<script>
+        $(document).ready(function () {
+            (function ($) {
+                $('#filter').keyup(function () {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.table tr').hide();
+                    $('.table tr').filter(function () {
+                        return rex.test($(this).text());
+                    }).show();
+                })
+            }(jQuery));
+        });
+    </script>
 
 
 </html>
