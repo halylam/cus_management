@@ -43,7 +43,7 @@ and open the template in the editor.
     <body>
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CHI TIẾT CUỘC HẸN</center></h2>
-        
+
         <div style="width: 90%">
             <form class="form-horizontal" role="form" action="editAppointment.php" method="POST" >
                 <input type="hidden" name="appId" value="<?php echo $appItem["appId"]; ?>" />
@@ -53,7 +53,7 @@ and open the template in the editor.
                         <select class="selectpicker"  name='cusId' id='cusId' value='<?php echo $appItem["cusId"]; ?>'>
                             <option value=''>Chọn</option>
                             <?php
-                            if($userType == 'Admin') {
+                            if ($userType == 'Admin') {
                                 $listCus = DBUtil::getInstance()->getListCustomerAdmin();
                             } else {
                                 $listCus = DBUtil::getInstance()->getListCustomer($userId);
@@ -73,22 +73,22 @@ and open the template in the editor.
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="datetime">Ngày giờ hẹn<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="datetime" id="datetimepicker" value="<?php echo date('d-m-Y H:i:s', strtotime($appItem["datetime"])); ?>" />
                     </div>
                 </div>
-                
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="position">Địa điểm<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="position" value="<?php echo $appItem["position"]; ?>" />
                     </div>
                 </div>
-                
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="reason">Lý do: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="reason" value="<?php echo $appItem["reason"]; ?>" />
@@ -113,7 +113,7 @@ and open the template in the editor.
                 $cusIsEmpty = true;
                 $mess = $mess . "<br/>Khách hàng bắt buộc nhập ";
             }
-            
+
             if ($_POST['datetime'] == "") {
                 $datetimeIsEmpty = true;
                 $mess = $mess . "<br/>Ngày giờ hẹn bắt buộc nhập ";
@@ -132,11 +132,9 @@ and open the template in the editor.
         }
         ?>
     </body>
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                jQuery('#datetimepicker').datetimepicker({
-                    format: 'd-m-Y H:i'
-                });
+        jQuery('#datetimepicker').datetimepicker({
+            format: 'd-m-Y H:i'
+        });
     </script>
 </html>

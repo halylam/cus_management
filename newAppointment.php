@@ -28,7 +28,7 @@ and open the template in the editor.
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CHI TIẾT CUỘC HẸN</center></h2>
         <div style="width: 90%">
-           
+
             <form class="form-horizontal" role="form" action="newAppointment.php" method="POST" >
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cusId">Khách hàng<label style="color: red">(*)</label>: </label>
@@ -46,22 +46,22 @@ and open the template in the editor.
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="datetime">Ngày giờ hẹn<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="datetime" id="datetimepicker" value="" />
                     </div>
                 </div>
-                
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="position">Địa điểm<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="position" value="" />
                     </div>
                 </div>
-                
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="reason">Lý do: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="reason" value="" />
@@ -86,7 +86,7 @@ and open the template in the editor.
                 $cusIsEmpty = true;
                 $mess = $mess . "<br/>Khách hàng bắt buộc nhập ";
             }
-            
+
             if ($_POST['datetime'] == "") {
                 $datetimeIsEmpty = true;
                 $mess = $mess . "<br/>Ngày giờ hẹn bắt buộc nhập ";
@@ -106,12 +106,9 @@ and open the template in the editor.
         ?>
     </body>
 
-
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                jQuery('#datetimepicker').datetimepicker({
-                    format: 'd-m-Y H:i'
-                });
+        jQuery('#datetimepicker').datetimepicker({
+            format: 'd-m-Y H:i'
+        });
     </script>
 </html>

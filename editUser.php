@@ -161,12 +161,10 @@ and open the template in the editor.
         }
         ?>
     </body>
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                            jQuery('#datetimepicker').datetimepicker({
-                                timepicker: false,
-                                format: 'd-m-Y'
-                            });
+        jQuery('#datetimepicker').datetimepicker({
+            timepicker: false,
+            format: 'd-m-Y'
+        });
     </script>
 </html>

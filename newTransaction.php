@@ -127,42 +127,39 @@ if (isset($_SESSION['userID'])) {
         ?>
     </body>
 
-
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                            jQuery('#datetimepicker').datetimepicker({
-                                format: 'd-m-Y H:i'
-                            });
+        jQuery('#datetimepicker').datetimepicker({
+            format: 'd-m-Y H:i'
+        });
 
-                            $(".numberOnly").keypress(function (e) {
-                                //if the letter is not digit then display error and don't type anything
-                                if (e.which != 8 && e.which != 46 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                                    return false;
-                                } else {
-                                    $('input').keyup(function () {
-                                        formatNumber(this);
-                                    });
-                                }
-                            });
+        $(".numberOnly").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 46 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            } else {
+                $('input').keyup(function () {
+                    formatNumber(this);
+                });
+            }
+        });
 
-                            $(".numberOnly").change(function () {
-                                formatNumber(this);
-                            });
+        $(".numberOnly").change(function () {
+            formatNumber(this);
+        });
 
-                            function replaceAll(str, find, replace) {
-                                return str.replace(new RegExp(find, 'g'), replace);
-                            }
-                            function formatNumber(obj) {
-                                var tmp = replaceAll(obj.value.toString(), ',', '');
-                                obj.value = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            }
+        function replaceAll(str, find, replace) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+        function formatNumber(obj) {
+            var tmp = replaceAll(obj.value.toString(), ',', '');
+            obj.value = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
-                            $(document).ready(function () {
-                                $(".numberOnly").each(function () {
-                                    formatNumber(this);
-                                });
-                            });
+        $(document).ready(function () {
+            $(".numberOnly").each(function () {
+                formatNumber(this);
+            });
+        });
 
     </script>
 </html>

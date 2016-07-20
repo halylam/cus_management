@@ -31,7 +31,7 @@ and open the template in the editor.
     <body>
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CÁ NHÂN</center></h2>
-        
+
         <div style="width: 90%">
             <form class="form-horizontal" role="form" action="newUser.php" method="POST" >
                 <div class="form-group">
@@ -90,7 +90,7 @@ and open the template in the editor.
                 </div>
             </form>
         </div>
-        
+
         <?php
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -125,16 +125,16 @@ and open the template in the editor.
                 $addressIsEmpty = true;
                 $mess = $mess . "<br/>Địa chỉ bắt buộc nhập ";
             }
-            
+
             if ($_POST['email'] != "") {
                 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $invalidEmail = true;
                     $mess = $mess . "<br/>Email không đúng định dạng. vd: abc@gmail.com ";
                 }
             }
-  
+
             if (!$loginIsEmpty && !$passIsEmpty && !$birthdayIsEmpty && !$nameIsEmpty && !$phoneIsEmpty && !$addressIsEmpty && !$invalidEmail) {
-                DBUtil::getInstance()->insertUser($_POST["login"], $_POST["pass"], $_POST["fullname"],$_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"]);
+                DBUtil::getInstance()->insertUser($_POST["login"], $_POST["pass"], $_POST["fullname"], $_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"]);
                 header('Location: listUser.php');
                 exit;
             } else {
@@ -144,12 +144,10 @@ and open the template in the editor.
         ?>
     </body>
 
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                jQuery('#datetimepicker').datetimepicker({
-                    timepicker: false,
-                    format: 'd-m-Y'
-                });
+        jQuery('#datetimepicker').datetimepicker({
+            timepicker: false,
+            format: 'd-m-Y'
+        });
     </script>
 </html>

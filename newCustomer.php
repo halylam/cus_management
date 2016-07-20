@@ -27,7 +27,7 @@ and open the template in the editor.
     <body>
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CHI TIẾT KHÁCH HÀNG</center></h2>
-        
+
         <div style="width: 90%">
             <form class="form-horizontal" role="form" action="newCustomer.php" method="POST" >
                 <div class="form-group">
@@ -36,28 +36,28 @@ and open the template in the editor.
                         <input type="text" class="form-control" name="cusName" value="" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="cusPhone">Số điện thoại<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="cusPhone" value="" />
                     </div>
                 </div>
-                
-                 <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label col-sm-2" for="cusAddress">Địa chỉ: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="cusAddress" value="" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="birthday">Ngày sinh: </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="datetimepicker" name="birthday" value="" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="email">Email:</label>
                     <div class="col-sm-10">
@@ -80,7 +80,7 @@ and open the template in the editor.
                 </div>
             </form>
         </div>
-        
+
         <?php
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -94,14 +94,14 @@ and open the template in the editor.
                 $phoneIsEmpty = true;
                 $mess = $mess . "<br/>Số điện thoại bắt buộc nhập ";
             }
-            
+
             if ($_POST['email'] != "") {
                 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                     $invalidEmail = true;
                     $mess = $mess . "<br/>Email không đúng định dạng. vd: abc@gmail.com ";
                 }
             }
-            
+
             if (!$nameIsEmpty && !$phoneIsEmpty && !$invalidEmail) {
                 DBUtil::getInstance()->insertCustomer($_POST["cusName"], $_POST["cusPhone"], $_POST["email"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["cusAddress"], $_POST["cusNote"], $userId);
                 header('Location: listCustomer.php');
@@ -113,12 +113,10 @@ and open the template in the editor.
         ?>
     </body>
 
-    <script src="jquery.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
     <script>
-                jQuery('#datetimepicker').datetimepicker({
-                    timepicker: false,
-                    format: 'd-m-Y'
-                });
+        jQuery('#datetimepicker').datetimepicker({
+            timepicker: false,
+            format: 'd-m-Y'
+        });
     </script>
 </html>

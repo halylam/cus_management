@@ -15,8 +15,9 @@ and open the template in the editor.
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-select.js"></script>
+        <script src="js/jquery.datetimepicker.full.min.js"></script>
     </head>
     <body>
-        <div style="text-align: right;  padding: 5px; width: 100%; background: #bbdbbd;">Chào mừng: <?php echo $fullname ." | "?> <a href="logout.php">Đăng Xuất</a></div>
+        <div style="text-align: right;  padding: 5px; width: 100%; background: #bbdbbd;">Chào mừng: <?php echo $fullname . " | " ?> <a href="logout.php">Đăng Xuất</a></div>
     </body>
 </html>
