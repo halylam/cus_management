@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set("Asia/Bangkok");
 class DBUtil extends mysqli {
 
     // single instance of self shared among all instances
